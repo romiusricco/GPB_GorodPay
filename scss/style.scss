@@ -1,19 +1,18 @@
 /* Global */
 /* ------------------------------------ */
-@import "global/_normalize.scss";
-@import "global/_variables";
-@import "global/_mixins";
-@import "global/_fonts";
-@import "global/_reboot";
-@import "global/_container";
-@import "global/_visually-hidden";
-
+@use "global/normalize.scss";
+@use "global/variables" as *;
+@use "global/mixins" as *;
+@use "global/fonts";
+@use "global/reboot";
+@use "global/container";
+@use "global/visually-hidden";
 
 /* Blocks */
 /* ------------------------------------ */
-@import "blocks/_btn";
-@import "blocks/_header";
-@import "blocks/_main-nav";
-@import "blocks/_hero";
-@import "blocks/_socials";
-@import "blocks/_footer";
+@use "blocks/btn";
+@use "blocks/header";
+@use "blocks/main-nav";
+@use "blocks/hero";
+@use "blocks/socials";
+@use "blocks/footer";
