@@ -14,4 +14,11 @@
   font-size: 13px;
   font-weight: 500;
   line-height: 16px;
+  cursor: pointer;
+  @include transition(color, background-color);
+
+  &:hover,
+  &:focus-visible {
+    background-color: $color-royal-blue-2;
+  }
 }

@@ -1,6 +1,7 @@
 @use "variables" as *;
 @use "mixins" as *;
 
+// 1. Глобальные токены через CSS Custom Properties
 :root {
     --transition-duration: #{$transition-duration};
     --transition-easing: #{$transition-easing};
@@ -9,8 +10,13 @@
     --animation-offset: #{$animation-offset};
     --animation-offset-lg: #{$animation-offset-lg};
     --animation-scale-closed: #{$animation-scale-closed};
+
+    // Добавляем токены Hero-анимации, если решили использовать их глобально
+    --hero-duration: #{$hero-duration};
+    --hero-easing-out: #{$hero-easing-out};
 }
 
+// 2. Доступность: отключение анимаций для тех, кому тяжело
 @media (prefers-reduced-motion: reduce) {
 
     *,
@@ -24,6 +30,69 @@
     }
 }
 
+// 3. Keyframes для каскадного появления Hero
+/* --- Header & Footer Fade In --- */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* --- Image Slide & Scale --- */
+@keyframes img-enter {
+    0% {
+        opacity: 0;
+        transform: translateX(100%) scale(1.2);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+/* --- Text Elements Slide Up/Down --- */
+@keyframes slide-down-to-pos {
+    0% {
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slide-up-to-pos {
+    0% {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes buttons-slide-up {
+    0% {
+        opacity: 0;
+        transform: translateY(56px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// 4. Utility classes (опционально, если нужны где-то еще)
 .u-fade-up {
     @include fade-up;
 }

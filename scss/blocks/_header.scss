@@ -5,13 +5,21 @@
   padding: 24px 0;
   background-color: $color-white;
 
-    // ОБЯЗАТЕЛЬНО для работы z-index
-      position: relative;
-    
-      // Поднимаем шапку выше всех остальных блоков (hero, footer и т.д.)
-      // Значение должно быть больше, чем у любого другого позиционированного элемента на странице.
-      // Обычно достаточно 100, но можно поставить и 999 для надежности.
-      z-index: 100;
+  // ОБЯЗАТЕЛЬНО для работы z-index
+  position: relative;
+
+  // Поднимаем шапку выше всех остальных блоков (hero, footer и т.д.)
+  // Значение должно быть больше, чем у любого другого позиционированного элемента на странице.
+  z-index: 100;
+
+  // Начальное состояние для анимации
+  opacity: 0;
+
+  // Активация анимации, когда body получил класс .page-loaded
+  .page-loaded & {
+    animation: fade-in $hero-duration $hero-easing-in-out forwards;
+    animation-delay: $delay-header-footer;
+  }
 
   &__wrapper {
     align-items: center;

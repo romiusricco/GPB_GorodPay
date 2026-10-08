@@ -3,7 +3,7 @@
 
 .hero {
   position: relative;
-  overflow: hidden;
+  overflow: hidden; // защита от горизонт. скролла при въезде картинки
   background-color: $color-solitude-3;
 
   &__wrapper {
@@ -13,6 +13,28 @@
     min-height: calc(100vh - 88px);
     padding: 70px 0;
     background-color: $color-solitude-3;
+
+    @include vp-1023 {
+      flex-direction: column-reverse;
+      text-align: center;
+    }
+  }
+
+  &__content {
+    z-index: 2; // в flex-родителе z-index работает без position
+
+    @include vp-1023 {
+      order: 2;
+    }
+  }
+
+  // ===================== БАЗА (визуал, без анимации) =====================
+  // Эти блоки НЕ трогаем при правке таймингов — здесь только размеры/фон/шрифт.
+
+  &__image {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain; // иллюстрацию не режем
   }
 
   &__heading {
@@ -34,6 +56,10 @@
   &__buttons {
     display: flex;
     gap: 16px;
+
+    @include vp-1023 {
+      justify-content: center;
+    }
   }
 
   &__download {
@@ -45,15 +71,71 @@
   }
 
   &__button {
-    display: flex;
     flex-shrink: 0;
-    align-items: center;
-    justify-content: center;
     width: 56px;
     height: 56px;
     padding: 0;
     border: none;
     border-radius: 8px;
     background-color: $color-royal-blue-1;
+    @include transition(background-color); // hover без transform — см. примечание
+
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    &:hover,
+    &:focus-visible {
+      background-color: $color-royal-blue-2;
+    }
   }
+
+  // ===================== АНИМАЦИЯ (состояния + запуск) =====================
+  // Отдельно от базы. Начальное состояние — только opacity/transform.
+
+  &__image {
+    opacity: 0;
+    transform: translateX(100%) scale(1.2);
+  }
+
+  &__heading {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+
+  &__text {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  &__download,
+  &__button {
+    opacity: 0;
+    transform: translateY(56px);
+  }
+
+  // Запуск каскада по классу на <body>. Плоские селекторы, чтобы
+  // animation-delay каждой кнопки читался линейно и не перекрывался вложенностью.
+  .page-loaded &__image {
+    animation: img-enter $hero-duration $hero-easing-out forwards;
+    animation-delay: $delay-image;
+  }
+
+  .page-loaded &__heading {
+    animation: slide-down-to-pos $hero-duration $hero-easing-out forwards;
+    animation-delay: calc(#{$delay-image} + #{$hero-duration});
+  }
+
+  .page-loaded &__text {
+    animation: slide-up-to-pos $hero-duration $hero-easing-out forwards;
+    animation-delay: calc(#{$delay-image} + #{$hero-duration} + 150ms);
+  }
+
+  .page-loaded &__download,
+  .page-loaded &__button {
+    animation: buttons-slide-up $hero-duration $hero-easing-out forwards;
+    animation-delay: calc(#{$delay-image} + #{$hero-duration} + 300ms);
+  }
+
 }

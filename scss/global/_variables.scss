@@ -58,3 +58,16 @@ $animation-scale-closed: 0.98;
 // компенсируется ТОЛЬКО оптика текста. Стартовое значение — эвристика,
 // финальное подбирается сверкой в DevTools (диапазон обычно 0…2px).
 $nav-dots-offset: 1px;
+
+
+// Animation tokens for Hero Stagger
+$hero-duration: 800ms; // Общая длительность одного этапа
+$hero-easing-out: cubic-bezier(0.25, 1, 0.5, 1); // Плавное торможение (ease-out-like)
+$hero-easing-in-out: cubic-bezier(0.65, 0, 0.35, 1); // Симметричный для header/footer
+
+// Задержки (Stagger delays)
+$delay-header-footer: 0s; // Сразу при старте
+$delay-image: 100ms; // Картинка чуть позже или одновременно? По логике - первая крупная
+$delay-h1: 400ms; // После картинки
+$delay-text: 550ms; // После H1
+$delay-buttons: 700ms; // Последние

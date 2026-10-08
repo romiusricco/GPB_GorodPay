@@ -318,6 +318,8 @@ template {
   --animation-offset: 16px;
   --animation-offset-lg: 24px;
   --animation-scale-closed: 0.98;
+  --hero-duration: 800ms;
+  --hero-easing-out: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -329,6 +331,57 @@ template {
     transition-duration: 0.01ms !important;
     transition-delay: 0s !important;
     scroll-behavior: auto !important;
+  }
+}
+/* --- Header & Footer Fade In --- */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* --- Image Slide & Scale --- */
+@keyframes img-enter {
+  0% {
+    opacity: 0;
+    transform: translateX(100%) scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+/* --- Text Elements Slide Up/Down --- */
+@keyframes slide-down-to-pos {
+  0% {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes slide-up-to-pos {
+  0% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes buttons-slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(56px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 .u-fade-up {
@@ -461,6 +514,11 @@ textarea {
   font-size: 13px;
   font-weight: 500;
   line-height: 16px;
+  cursor: pointer;
+  transition: color 300ms cubic-bezier(0.65, 0, 0.35, 1) 0s, background-color 300ms cubic-bezier(0.65, 0, 0.35, 1) 0s;
+}
+.btn:hover, .btn:focus-visible {
+  background-color: #2F54DF;
 }
 
 .header {
@@ -468,6 +526,11 @@ textarea {
   background-color: #ffffff;
   position: relative;
   z-index: 100;
+  opacity: 0;
+}
+.page-loaded .header {
+  animation: fade-in 800ms cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  animation-delay: 0s;
 }
 .header__wrapper {
   align-items: center;
@@ -647,6 +710,25 @@ textarea {
   padding: 70px 0;
   background-color: #F4F6FA;
 }
+@media (max-width: 1023px) {
+  .hero__wrapper {
+    flex-direction: column-reverse;
+    text-align: center;
+  }
+}
+.hero__content {
+  z-index: 2;
+}
+@media (max-width: 1023px) {
+  .hero__content {
+    order: 2;
+  }
+}
+.hero__image {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
 .hero__heading {
   margin: 0 0 24px;
   color: #1E222E;
@@ -665,6 +747,11 @@ textarea {
   display: flex;
   gap: 16px;
 }
+@media (max-width: 1023px) {
+  .hero__buttons {
+    justify-content: center;
+  }
+}
 .hero__download {
   padding: 18px 32px;
   text-align: center;
@@ -673,16 +760,53 @@ textarea {
   line-height: 20px;
 }
 .hero__button {
-  display: flex;
   flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
   width: 56px;
   height: 56px;
   padding: 0;
   border: none;
   border-radius: 8px;
   background-color: #476BF0;
+  transition: background-color 300ms cubic-bezier(0.65, 0, 0.35, 1) 0s;
+}
+.hero__button svg {
+  width: 24px;
+  height: 24px;
+}
+.hero__button:hover, .hero__button:focus-visible {
+  background-color: #2F54DF;
+}
+.hero__image {
+  opacity: 0;
+  transform: translateX(100%) scale(1.2);
+}
+.hero__heading {
+  opacity: 0;
+  transform: translateY(-40px);
+}
+.hero__text {
+  opacity: 0;
+  transform: translateY(24px);
+}
+.hero__download, .hero__button {
+  opacity: 0;
+  transform: translateY(56px);
+}
+.page-loaded .hero__image {
+  animation: img-enter 800ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation-delay: 100ms;
+}
+.page-loaded .hero__heading {
+  animation: slide-down-to-pos 800ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation-delay: calc(100ms + 800ms);
+}
+.page-loaded .hero__text {
+  animation: slide-up-to-pos 800ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation-delay: calc(100ms + 800ms + 150ms);
+}
+.page-loaded .hero__download, .page-loaded .hero__button {
+  animation: buttons-slide-up 800ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation-delay: calc(100ms + 800ms + 300ms);
 }
 
 .socials {
@@ -703,6 +827,13 @@ textarea {
   background-color: #EDEEEF;
 }
 
+.footer {
+  opacity: 0;
+}
+.page-loaded .footer {
+  animation: fade-in 800ms cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  animation-delay: 0s;
+}
 .footer__wrapper {
   display: flex;
   align-items: flex-start;

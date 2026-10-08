@@ -2,6 +2,15 @@
 @use "../global/mixins" as *;
 
 .footer {
+
+  // Начальное состояние
+  opacity: 0;
+
+  .page-loaded & {
+    animation: fade-in $hero-duration $hero-easing-in-out forwards;
+    animation-delay: $delay-header-footer; // Или другая задержка, если нужно
+  }
+
   &__wrapper {
     display: flex;
     align-items: flex-start;
