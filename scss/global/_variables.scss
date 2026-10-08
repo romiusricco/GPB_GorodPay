@@ -1,3 +1,11 @@
+// Все анимационные токены (тайминги, геометрия въезда, scale картинки)
+// живут в _settings.scss — единственной панели клиентской доводки.
+// Форвардим их СЮДА первой строкой, чтобы существующие
+// @use "global/variables" as *  (миксины, _animations, все блоки)
+// получили настройки автоматически, без правки своих @use.
+
+@forward "settings";
+
 // Colors
 $color-white: #ffffff;
 $color-snow: #FFFBFB;
@@ -26,7 +34,6 @@ $color-dark-purple: #9D1881;
 $color-sunset-orange: #F6514B;
 $color-persian-red: #D72522;
 
-
 $color-black-50: rgba(0, 0, 0, 0.5);
 $color-white-5: rgba(255, 255, 255, 0.05);
 $color-white-15: rgba(255, 255, 255, 0.15);
@@ -41,33 +48,8 @@ $ff-main: "Noto Sans", "Arial", sans-serif;
 $vp-tablet: 1023px;
 $vp-mobile: 767px;
 
-// Animation
-//$transition-300: ease-in 0.3s;
-
-// Animation tokens
-$transition-duration: 300ms;
-$transition-easing: cubic-bezier(0.65, 0, 0.35, 1);
-$transition-delay: 0s;
-
-$animation-offset: 16px;
-$animation-offset-lg: 24px;
-$animation-scale-closed: 0.98;
-
 // Оптическая подстройка иконки "три точки" относительно строк соседних ссылок.
 // Геометрический дефект спрайта исправлен правкой cy=10, поэтому здесь
 // компенсируется ТОЛЬКО оптика текста. Стартовое значение — эвристика,
 // финальное подбирается сверкой в DevTools (диапазон обычно 0…2px).
 $nav-dots-offset: 1px;
-
-
-// Animation tokens for Hero Stagger
-$hero-duration: 800ms; // Общая длительность одного этапа
-$hero-easing-out: cubic-bezier(0.25, 1, 0.5, 1); // Плавное торможение (ease-out-like)
-$hero-easing-in-out: cubic-bezier(0.65, 0, 0.35, 1); // Симметричный для header/footer
-
-// Задержки (Stagger delays)
-$delay-header-footer: 0s; // Сразу при старте
-$delay-image: 100ms; // Картинка чуть позже или одновременно? По логике - первая крупная
-$delay-h1: 400ms; // После картинки
-$delay-text: 550ms; // После H1
-$delay-buttons: 700ms; // Последние

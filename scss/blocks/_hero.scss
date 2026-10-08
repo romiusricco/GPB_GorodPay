@@ -117,25 +117,27 @@
 
   // Запуск каскада по классу на <body>. Плоские селекторы, чтобы
   // animation-delay каждой кнопки читался линейно и не перекрывался вложенностью.
+  // Запуск каскада: каждое правило = свой dur + свой delay-токен.
+  // Никаких чисел и calc в блоке — тайминг живёт только в _settings.scss.
   .page-loaded &__image {
-    animation: img-enter $hero-duration $hero-easing-out forwards;
+    animation: img-enter $dur-image $hero-easing-out forwards;
     animation-delay: $delay-image;
   }
 
   .page-loaded &__heading {
-    animation: slide-down-to-pos $hero-duration $hero-easing-out forwards;
-    animation-delay: calc(#{$delay-image} + #{$hero-duration});
+    animation: slide-down-to-pos $dur-heading $hero-easing-out forwards;
+    animation-delay: $delay-heading;
   }
 
   .page-loaded &__text {
-    animation: slide-up-to-pos $hero-duration $hero-easing-out forwards;
-    animation-delay: calc(#{$delay-image} + #{$hero-duration} + 150ms);
+    animation: slide-up-to-pos $dur-text $hero-easing-out forwards;
+    animation-delay: $delay-text;
   }
 
+  // Обе кнопки — ОДНА пара токенов -> строго синхронный старт и полёт.
   .page-loaded &__download,
   .page-loaded &__button {
-    animation: buttons-slide-up $hero-duration $hero-easing-out forwards;
-    animation-delay: calc(#{$delay-image} + #{$hero-duration} + 300ms);
+    animation: buttons-slide-up $dur-buttons $hero-easing-out forwards;
+    animation-delay: $delay-buttons;
   }
-
 }

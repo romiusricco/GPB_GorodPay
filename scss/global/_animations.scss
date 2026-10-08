@@ -1,7 +1,10 @@
 @use "variables" as *;
 @use "mixins" as *;
 
-// 1. Глобальные токены через CSS Custom Properties
+// 1. Глобальные токены через CSS Custom Properties.
+//    hero-тайминги/геометрия сюда НЕ кладём: они живут Sass-токенами
+//    ($dur-*/$gap-*/$offset-*/$img-enter-*) в _settings.scss и читаются
+//    блоками и keyframes напрямую. var(--hero-*) нигде не используется.
 :root {
     --transition-duration: #{$transition-duration};
     --transition-easing: #{$transition-easing};
@@ -10,13 +13,9 @@
     --animation-offset: #{$animation-offset};
     --animation-offset-lg: #{$animation-offset-lg};
     --animation-scale-closed: #{$animation-scale-closed};
-
-    // Добавляем токены Hero-анимации, если решили использовать их глобально
-    --hero-duration: #{$hero-duration};
-    --hero-easing-out: #{$hero-easing-out};
 }
 
-// 2. Доступность: отключение анимаций для тех, кому тяжело
+// 2. Доступность: схлопываем движение для тех, кому тяжело.
 @media (prefers-reduced-motion: reduce) {
 
     *,
@@ -30,8 +29,9 @@
     }
 }
 
-// 3. Keyframes для каскадного появления Hero
-/* --- Header & Footer Fade In --- */
+// 3. Keyframes. Геометрия стартует из _settings.scss (через forward),
+//    поэтому правка одного числа двигает и 0%-кадр, и ожидание блока
+//    согласованно — без скачка в момент запуска анимации.
 @keyframes fade-in {
     from {
         opacity: 0;
@@ -42,11 +42,10 @@
     }
 }
 
-/* --- Image Slide & Scale --- */
 @keyframes img-enter {
     0% {
         opacity: 0;
-        transform: translateX(100%) scale(1.2);
+        transform: translateX($img-enter-x) scale($img-enter-scale);
     }
 
     100% {
@@ -55,11 +54,10 @@
     }
 }
 
-/* --- Text Elements Slide Up/Down --- */
 @keyframes slide-down-to-pos {
     0% {
         opacity: 0;
-        transform: translateY(-40px);
+        transform: translateY($offset-heading);
     }
 
     100% {
@@ -71,7 +69,7 @@
 @keyframes slide-up-to-pos {
     0% {
         opacity: 0;
-        transform: translateY(24px);
+        transform: translateY($offset-text);
     }
 
     100% {
@@ -83,7 +81,7 @@
 @keyframes buttons-slide-up {
     0% {
         opacity: 0;
-        transform: translateY(56px);
+        transform: translateY($offset-buttons);
     }
 
     100% {
@@ -92,7 +90,7 @@
     }
 }
 
-// 4. Utility classes (опционально, если нужны где-то еще)
+// 4. Utility-классы (если где-то ещё применяются).
 .u-fade-up {
     @include fade-up;
 }

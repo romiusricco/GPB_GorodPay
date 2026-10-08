@@ -7,8 +7,8 @@
   opacity: 0;
 
   .page-loaded & {
-    animation: fade-in $hero-duration $hero-easing-in-out forwards;
-    animation-delay: $delay-header-footer; // Или другая задержка, если нужно
+    animation: fade-in $dur-footer $hero-easing-out forwards;
+    animation-delay: $delay-footer; // Или другая задержка, если нужно
   }
 
   &__wrapper {
