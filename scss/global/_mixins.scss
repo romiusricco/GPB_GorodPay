@@ -1,4 +1,6 @@
-@use "../global/variables" as *;
+@use "sass:list";
+@use "sass:string";
+@use "variables" as *;
 
 @mixin vp-1023 {
   @media (max-width: $vp-tablet) {
@@ -10,4 +12,67 @@
   @media (max-width: $vp-mobile) {
     @content;
   }
+}
+
+/// Базовый миксин для transition.
+/// Всегда требует явные свойства: opacity, transform, color и т.д.
+/// Запрещает использовать all.
+@mixin transition-duration($duration, $properties...) {
+  @if list.length($properties)==0 {
+    @error "@include transition-duration() требует минимум одно transition-property. Например: @include transition-duration(300ms, opacity, transform);";
+  }
+
+  $transition-list: (
+  );
+
+@each $property in $properties {
+  @if "#{$property}"=="all" {
+    @error "Запрещено использовать transition-property: all. Перечисляйте свойства явно: opacity, transform, color, background-color и т.д.";
+  }
+
+  $transition-list: list.append($transition-list,
+      string.unquote("#{$property} #{$duration} #{$transition-easing} #{$transition-delay}"),
+      comma);
+}
+
+transition: $transition-list;
+}
+
+/// Основной миксин transition.
+/// Использование:
+/// @include transition(opacity);
+/// @include transition(opacity, transform);
+/// @include transition(color, background-color, transform);
+@mixin transition($properties...) {
+  @include transition-duration($transition-duration, $properties...);
+}
+
+/// Плавное появление с небольшим смещением вверх.
+/// Смещение сделано через transform, поэтому не влияет на layout.
+@mixin fade-up($offset: $animation-offset) {
+  opacity: 0;
+  transform: translate3d(0, $offset, 0);
+  @include transition(opacity, transform);
+}
+
+/// Открытое/видимое состояние для fade-up.
+@mixin fade-up-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/// Базовое состояние выпадающего/всплывающего слоя.
+@mixin popup-closed($offset-y: $animation-offset, $scale: $animation-scale-closed, $origin: top right) {
+  opacity: 0;
+  transform: translate3d(0, -$offset-y, 0) scale($scale);
+  transform-origin: $origin;
+  pointer-events: none;
+  @include transition(opacity, transform);
+}
+
+/// Открытое состояние всплывающего слоя.
+@mixin popup-open {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  pointer-events: auto;
 }

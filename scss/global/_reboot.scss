@@ -19,6 +19,8 @@ body {
   line-height: 24px;
   color: $color-black-russian;
   background-color: $color-white;
+  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 main {

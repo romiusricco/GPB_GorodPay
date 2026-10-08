@@ -1,0 +1,43 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+:root {
+    --transition-duration: #{$transition-duration};
+    --transition-easing: #{$transition-easing};
+    --transition-delay: #{$transition-delay};
+
+    --animation-offset: #{$animation-offset};
+    --animation-offset-lg: #{$animation-offset-lg};
+    --animation-scale-closed: #{$animation-scale-closed};
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        transition-delay: 0s !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+.u-fade-up {
+    @include fade-up;
+}
+
+.u-fade-up.is-visible,
+.u-fade-up.is-active,
+.u-fade-up.is-open {
+    @include fade-up-visible;
+}
+
+.u-popup {
+    @include popup-closed;
+}
+
+.u-popup.is-open {
+    @include popup-open;
+}
