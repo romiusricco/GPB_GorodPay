@@ -48,6 +48,11 @@
         transform: translateX($img-enter-x) scale($img-enter-scale);
     }
 
+    #{$img-travel-end} {
+        opacity: 1;
+        transform: translateX(0) scale($img-enter-scale);
+    }
+
     100% {
         opacity: 1;
         transform: translateX(0) scale(1);

@@ -342,7 +342,11 @@ template {
 @keyframes img-enter {
   0% {
     opacity: 0;
-    transform: translateX(100%) scale(1.2);
+    transform: translateX(100%) scale(1.5);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(0) scale(1.5);
   }
   100% {
     opacity: 1;
@@ -524,7 +528,7 @@ textarea {
   opacity: 0;
 }
 .page-loaded .header {
-  animation: fade-in 800ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation: fade-in 1120ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
   animation-delay: 0s;
 }
 .header__wrapper {
@@ -788,20 +792,20 @@ textarea {
   transform: translateY(56px);
 }
 .page-loaded .hero__image {
-  animation: img-enter 800ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation: img-enter 2240ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
   animation-delay: 100ms;
 }
 .page-loaded .hero__heading {
-  animation: slide-down-to-pos 800ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
-  animation-delay: 900ms;
+  animation: slide-down-to-pos 1120ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation-delay: 1220ms;
 }
 .page-loaded .hero__text {
-  animation: slide-up-to-pos 800ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
-  animation-delay: 1700ms;
+  animation: slide-up-to-pos 1120ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation-delay: 2340ms;
 }
 .page-loaded .hero__download, .page-loaded .hero__button {
-  animation: buttons-slide-up 800ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
-  animation-delay: 2500ms;
+  animation: buttons-slide-up 1120ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation-delay: 3460ms;
 }
 
 .socials {
@@ -826,7 +830,7 @@ textarea {
   opacity: 0;
 }
 .page-loaded .footer {
-  animation: fade-in 800ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation: fade-in 1120ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
   animation-delay: 0s;
 }
 .footer__wrapper {
