@@ -466,6 +466,8 @@ textarea {
 .header {
   padding: 24px 0;
   background-color: #ffffff;
+  position: relative;
+  z-index: 100;
 }
 .header__wrapper {
   align-items: center;
