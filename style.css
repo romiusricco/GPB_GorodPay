@@ -777,7 +777,7 @@ textarea {
 }
 .hero__image {
   opacity: 0;
-  transform: translateX(100%) scale(1.2);
+  transform: translateX(100%) scale(1.5);
 }
 .hero__heading {
   opacity: 0;

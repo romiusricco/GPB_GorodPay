@@ -19,8 +19,6 @@
         requestAnimationFrame(() => {
             requestAnimationFrame(() => {
                 document.body.classList.add('page-loaded');
-
-                console.log('[Animation] Page loaded class added. Animations started.');
             });
         });
     };
