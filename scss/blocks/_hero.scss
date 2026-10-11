@@ -78,7 +78,9 @@
     border: none;
     border-radius: 8px;
     background-color: $color-royal-blue-1;
-    @include transition(background-color); // hover без transform — см. примечание
+    @include transition(
+      background-color
+    ); // hover без transform — см. примечание
 
     svg {
       width: 24px;
@@ -91,31 +93,44 @@
     }
   }
 
-     // ===================== АНИМАЦИЯ (состояния + запуск) =====================
-     // Начальные transform = ТЕ ЖЕ токены, что в 0%-кадрах keyframes
-     // (_animations.scss). Правка $img-enter-*/$offset-* в _settings.scss
-     // двигает старт и ожидание (during delay) согласованно — без скачка.
-     &__image {
-       opacity: 0;
-       transform: translateX($img-enter-x) scale($img-enter-scale);
-     }
-  
-     &__heading {
-       opacity: 0;
-       transform: translateY($offset-heading);
-     }
-  
-     &__text {
-       opacity: 0;
-       transform: translateY($offset-text);
-     }
-  
-     &__download,
-     &__button {
-       opacity: 0;
-       transform: translateY($offset-buttons);
-     }
+  // ===================== АНИМАЦИЯ (состояния + запуск) =====================
+  // Начальные transform = ТЕ ЖЕ токены, что в 0%-кадрах keyframes
+  // (_animations.scss). Правка $img-enter-*/$offset-* в _settings.scss
+  // двигает старт и ожидание (during delay) согласованно — без скачка.
+  // ===================== АНИМАЦИЯ (состояния + запуск) =====================
+  // Стартовое состояние прячем за .js & ЦЕЛИКОМ (и opacity, и transform):
+  // без JS блок виден на своих местах (transform = none по умолчанию),
+  // с JS — скрыт/сдвинут до старта каскада. Токены = те же, что в 0%-кадрах
+  // keyframes (_animations.scss), поэтому правка $img-enter-*/$offset-* в
+  // _settings.scss двигает старт и ожидание (during delay) согласованно.
+  &__image {
+    .js & {
+      opacity: 0;
+      transform: translateX($img-enter-x) scale($img-enter-scale);
+    }
+  }
 
+  &__heading {
+    .js & {
+      opacity: 0;
+      transform: translateY($offset-heading);
+    }
+  }
+
+  &__text {
+    .js & {
+      opacity: 0;
+      transform: translateY($offset-text);
+    }
+  }
+
+  &__download,
+  &__button {
+    .js & {
+      opacity: 0;
+      transform: translateY($offset-buttons);
+    }
+  }
 
   // Запуск каскада: каждое правило = свой dur + свой delay-токен.
   // Никаких чисел и calc в блоке — тайминг живёт только в _settings.scss.

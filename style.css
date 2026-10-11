@@ -525,6 +525,8 @@ textarea {
   background-color: #ffffff;
   position: relative;
   z-index: 100;
+}
+.js .header {
   opacity: 0;
 }
 .page-loaded .header {
@@ -775,19 +777,19 @@ textarea {
 .hero__button:hover, .hero__button:focus-visible {
   background-color: #2F54DF;
 }
-.hero__image {
+.js .hero__image {
   opacity: 0;
   transform: translateX(100%) scale(1.5);
 }
-.hero__heading {
+.js .hero__heading {
   opacity: 0;
   transform: translateY(-40px);
 }
-.hero__text {
+.js .hero__text {
   opacity: 0;
   transform: translateY(24px);
 }
-.hero__download, .hero__button {
+.js .hero__download, .js .hero__button {
   opacity: 0;
   transform: translateY(56px);
 }
@@ -826,7 +828,7 @@ textarea {
   background-color: #EDEEEF;
 }
 
-.footer {
+.js .footer {
   opacity: 0;
 }
 .page-loaded .footer {
