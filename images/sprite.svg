@@ -97,9 +97,9 @@
         </defs>
     </symbol>
     <symbol id="icon-menu-dots" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="1.5" cy="9.5" r="1.5" fill="#476BF0"/>
-        <circle cx="9.5" cy="9.5" r="1.5" fill="#476BF0"/>
-        <circle cx="17.5" cy="9.5" r="1.5" fill="#476BF0"/>
+        <circle cx="1.5" cy="10" r="1.5" fill="#476BF0"/>
+        <circle cx="9.5" cy="10" r="1.5" fill="#476BF0"/>
+        <circle cx="17.5" cy="10" r="1.5" fill="#476BF0"/>
     </symbol>
     <symbol id="icon-burger" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
         <line x1="2.75" y1="9.25" x2="17.25" y2="9.25" stroke="white" stroke-width="1.5" stroke-linecap="round"/>

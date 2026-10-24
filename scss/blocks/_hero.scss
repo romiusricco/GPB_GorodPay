@@ -1,6 +1,9 @@
+@use "../global/variables" as *;
+@use "../global/mixins" as *;
+
 .hero {
   position: relative;
-  overflow: hidden;
+  overflow: hidden; // защита от горизонт. скролла при въезде картинки
   background-color: $color-solitude-3;
 
   &__wrapper {
@@ -10,6 +13,28 @@
     min-height: calc(100vh - 88px);
     padding: 70px 0;
     background-color: $color-solitude-3;
+
+    @include vp-1023 {
+      flex-direction: column-reverse;
+      text-align: center;
+    }
+  }
+
+  &__content {
+    z-index: 2; // в flex-родителе z-index работает без position
+
+    @include vp-1023 {
+      order: 2;
+    }
+  }
+
+  // ===================== БАЗА (визуал, без анимации) =====================
+  // Эти блоки НЕ трогаем при правке таймингов — здесь только размеры/фон/шрифт.
+
+  &__image {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain; // иллюстрацию не режем
   }
 
   &__heading {
@@ -31,6 +56,10 @@
   &__buttons {
     display: flex;
     gap: 16px;
+
+    @include vp-1023 {
+      justify-content: center;
+    }
   }
 
   &__download {
@@ -42,15 +71,88 @@
   }
 
   &__button {
-    display: flex;
     flex-shrink: 0;
-    align-items: center;
-    justify-content: center;
     width: 56px;
     height: 56px;
     padding: 0;
     border: none;
     border-radius: 8px;
     background-color: $color-royal-blue-1;
+    @include transition(
+      background-color
+    ); // hover без transform — см. примечание
+
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    &:hover,
+    &:focus-visible {
+      background-color: $color-royal-blue-2;
+    }
+  }
+
+  // ===================== АНИМАЦИЯ (состояния + запуск) =====================
+  // Начальные transform = ТЕ ЖЕ токены, что в 0%-кадрах keyframes
+  // (_animations.scss). Правка $img-enter-*/$offset-* в _settings.scss
+  // двигает старт и ожидание (during delay) согласованно — без скачка.
+  // ===================== АНИМАЦИЯ (состояния + запуск) =====================
+  // Стартовое состояние прячем за .js & ЦЕЛИКОМ (и opacity, и transform):
+  // без JS блок виден на своих местах (transform = none по умолчанию),
+  // с JS — скрыт/сдвинут до старта каскада. Токены = те же, что в 0%-кадрах
+  // keyframes (_animations.scss), поэтому правка $img-enter-*/$offset-* в
+  // _settings.scss двигает старт и ожидание (during delay) согласованно.
+  &__image {
+    .js & {
+      opacity: 0;
+      transform: translateX($img-enter-x) scale($img-enter-scale);
+    }
+  }
+
+  &__heading {
+    .js & {
+      opacity: 0;
+      transform: translateY($offset-heading);
+    }
+  }
+
+  &__text {
+    .js & {
+      opacity: 0;
+      transform: translateY($offset-text);
+    }
+  }
+
+  &__download,
+  &__button {
+    .js & {
+      opacity: 0;
+      transform: translateY($offset-buttons);
+    }
+  }
+
+  // Запуск каскада: каждое правило = свой dur + свой delay-токен.
+  // Никаких чисел и calc в блоке — тайминг живёт только в _settings.scss.
+  .page-loaded &__image {
+    animation: img-enter $dur-image $hero-easing-out forwards;
+    animation-delay: $delay-image;
+  }
+
+  .page-loaded &__heading {
+    animation: slide-down-to-pos $dur-heading $hero-easing-out forwards;
+    animation-delay: $delay-heading;
+  }
+
+  .page-loaded &__text {
+    animation: slide-up-to-pos $dur-text $hero-easing-out forwards;
+    animation-delay: $delay-text;
+  }
+
+  // Обе кнопки — ОДНА пара токенов -> строго синхронный старт и полёт.
+  .page-loaded &__download,
+  .page-loaded &__button {
+    animation: buttons-slide-up $dur-buttons $hero-easing-out forwards;
+    animation-delay: $delay-buttons;
   }
 }

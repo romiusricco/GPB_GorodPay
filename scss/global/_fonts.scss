@@ -1,3 +1,6 @@
+@use "../global/variables" as *;
+@use "../global/mixins" as *;
+
 @font-face {
   font-family: "Noto Sans";
   src: url("../fonts/noto-sans-regular.woff2") format("woff2"),

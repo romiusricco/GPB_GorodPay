@@ -1,6 +1,27 @@
+@use "../global/variables" as *;
+@use "../global/mixins" as *;
+
 .header {
   padding: 24px 0;
   background-color: $color-white;
+
+  // ОБЯЗАТЕЛЬНО для работы z-index
+  position: relative;
+
+  // Поднимаем шапку выше всех остальных блоков (hero, footer и т.д.)
+  // Значение должно быть больше, чем у любого другого позиционированного элемента на странице.
+  z-index: 100;
+
+  // Стартовое состояние — ТОЛЬКО при живом JS. Без JS блок виден статично.
+  .js & {
+    opacity: 0;
+  }
+
+  // Активация анимации, когда body получил класс .page-loaded
+  .page-loaded & {
+    animation: fade-in $dur-header $hero-easing-out forwards;
+    animation-delay: $delay-header;
+  }
 
   &__wrapper {
     align-items: center;

@@ -1,0 +1,115 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+// 1. Глобальные токены через CSS Custom Properties.
+//    hero-тайминги/геометрия сюда НЕ кладём: они живут Sass-токенами
+//    ($dur-*/$gap-*/$offset-*/$img-enter-*) в _settings.scss и читаются
+//    блоками и keyframes напрямую. var(--hero-*) нигде не используется.
+:root {
+    --transition-duration: #{$transition-duration};
+    --transition-easing: #{$transition-easing};
+    --transition-delay: #{$transition-delay};
+
+    --animation-offset: #{$animation-offset};
+    --animation-offset-lg: #{$animation-offset-lg};
+    --animation-scale-closed: #{$animation-scale-closed};
+}
+
+// 2. Доступность: схлопываем движение для тех, кому тяжело.
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        transition-delay: 0s !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+// 3. Keyframes. Геометрия стартует из _settings.scss (через forward),
+//    поэтому правка одного числа двигает и 0%-кадр, и ожидание блока
+//    согласованно — без скачка в момент запуска анимации.
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes img-enter {
+    0% {
+        opacity: 0;
+        transform: translateX($img-enter-x) scale($img-enter-scale);
+    }
+
+    #{$img-travel-end} {
+        opacity: 1;
+        transform: translateX(0) scale($img-enter-scale);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes slide-down-to-pos {
+    0% {
+        opacity: 0;
+        transform: translateY($offset-heading);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slide-up-to-pos {
+    0% {
+        opacity: 0;
+        transform: translateY($offset-text);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes buttons-slide-up {
+    0% {
+        opacity: 0;
+        transform: translateY($offset-buttons);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// 4. Utility-классы (если где-то ещё применяются).
+.u-fade-up {
+    @include fade-up;
+}
+
+.u-fade-up.is-visible,
+.u-fade-up.is-active,
+.u-fade-up.is-open {
+    @include fade-up-visible;
+}
+
+.u-popup {
+    @include popup-closed;
+}
+
+.u-popup.is-open {
+    @include popup-open;
+}
